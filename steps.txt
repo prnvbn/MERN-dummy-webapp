@@ -1,0 +1,10 @@
+1. npm init - creates package.json
+2. npm install --save express body-parser
+3. npm install --save-dev nodemon (add start script to package.json)
+
+graphQL
+4. npm install --save express-graphql graphql (to parse queries)
+5. npm install(capabilities of the API)
+
+
+in graphQL query is for fetching data and mutation is for fetching data
