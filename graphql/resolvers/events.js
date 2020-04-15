@@ -1,4 +1,5 @@
 const Event = require('../../models/event')
+const User  = require('../../models/users');
 const { transformEvent } = require('../../helpers/resolver_helpers')
 
 
@@ -13,13 +14,19 @@ module.exports = {
             throw err;
         }
     }, 
-    createEvent: async args => {
+    createEvent: async (args, req) => {
+        // Authentticating the request
+        if(!req.isAuth) {
+            throw new Error('Unauthenticated access');
+        }
+
+
         const event = new Event({
             title: args.eventInput.title,
             description: args.eventInput.description,
             price: +args.eventInput.price,
             date: new Date(args.eventInput.date),
-            creator: "5e965d0dd101182163b8819d"  
+            creator: req.userid  
         });  
         let createdEvent;
         try {
