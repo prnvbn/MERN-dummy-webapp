@@ -65,11 +65,11 @@ module.exports = {
                 creator: user.bind(this, result._doc.creator),
                 date: new Date(event._doc.date).toISOString()
             };
-            const user = await User.findById("5e965d0dd101182163b8819d");
-            if (!user) {
+            const creator = await User.findById("5e965d0dd101182163b8819d");
+            if (!creator) {
                 throw new Error('No such User exists');
             }
-            user.createdEvents.push(event);
+            creator.createdEvents.push(event);
             return createdEvent;
         }
         catch (err) {
@@ -79,8 +79,8 @@ module.exports = {
     },
     createUser: async args => {
         try {
-            const user = await User.findOne({ email: args.userInput.email });
-            if (user) {
+            const creator = await User.findOne({ email: args.userInput.email });
+            if (creator) {
                 throw new Error('User with the same email already exists');
             }
             const hashedPassword = await bcrypt.hash(args.userInput.password, 12);
