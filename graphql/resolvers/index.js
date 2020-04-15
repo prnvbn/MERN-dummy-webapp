@@ -133,6 +133,10 @@ module.exports = {
     bookEvent: async args => {
         const fetchedEvent = await Event.findOne({_id: args.eventId})
 
+        if(!fetchedEvent) {
+            throw new Error('Event does not exist')
+        }    
+
         const booking = new Booking({
             user: '5e965d0dd101182163b8819d',
             event: fetchedEvent
@@ -144,5 +148,19 @@ module.exports = {
             event: singleEvent.bind(this, booking._doc.event)
         }
         
+    },
+    cancelBooking: async args => {
+        try {
+           const booking = await Booking.findById(args.bookingId).populate('event');
+           const event = {
+               ...booking.event._doc,
+               creator: user.bind(this, booking.event._doc.creator)
+            };
+            await Booking.deleteOne({_id: args.bookingId});
+            return event;
+
+        } catch (err) {
+            throw err;
+        }
     }
 }
