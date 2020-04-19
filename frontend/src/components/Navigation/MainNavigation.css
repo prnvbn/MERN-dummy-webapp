@@ -33,7 +33,7 @@
 
 .main-navigation__items ul {
     display: flex;
-    padding: 0;
+    padding: 0 0.5rem;
     list-style: none;
     margin: 0;
     display: flex;

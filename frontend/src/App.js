@@ -9,9 +9,32 @@ import MainNavigation from './components/Navigation/MainNavigation';
 import SideDrawer from './components/Navigation/SideDrawer/SideDrawer';
 import BackDrop from './components/Navigation/Backdrop/Backdrop';
 
+import AuthContext from './context/auth-context';
+
 import './App.css';
 
 class App extends Component {
+
+  state = {
+    token: null,
+    userId: null
+  }
+
+
+  login = (token, userId, tokenExpiration) => {
+    this.setState({
+      token: token,
+      userId: userId
+    });
+  }
+
+  logout = () =>{
+    this.setState({
+      token: null,
+      userId: null
+    });
+  };
+
   state = {
     sideDrawerOpen: false
   };
@@ -31,7 +54,7 @@ class App extends Component {
     let backdrop;
 
     if (this.state.sideDrawerOpen) {
-      backdrop   = <BackDrop click= {this.backdropClickHandler}/>;
+      backdrop = <BackDrop click= {this.backdropClickHandler}/>;
     }
 
 
@@ -39,17 +62,32 @@ class App extends Component {
       <div style={{height: '100%'}}>
         <BrowserRouter>
         <React.Fragment>
-          <MainNavigation drawerClickHandler={this.drawerToggleClickHandler} />
-          <SideDrawer show={this.state.sideDrawerOpen} />
-          {backdrop}
-          <main className="main-content" >
+          <AuthContext.Provider 
+            value ={{
+              token: this.state.token,
+              userId: this.state.userId,
+              login: this.login,
+              logout: this.logout
+            }}
+          >
+            <MainNavigation drawerClickHandler={this.drawerToggleClickHandler} />
+            <SideDrawer show={this.state.sideDrawerOpen} />
+            {backdrop}
+            <main className="main-content" >
             <Switch>
-              <Redirect from="/" to="/auth" exact />
-              <Route path="/auth" component={AuthPage} />
-              <Route path="/events" component={EventsPage} />
-              <Route path="/bookings" component={BookingsPage} />
-            </Switch>
-          </main>
+                {!this.state.token && <Redirect from="/" to="/auth" exact />}
+                {this.state.token && <Redirect from="/" to="/events" exact />}
+                {this.state.token && <Redirect from="/auth" to="/events" exact />}
+                {!this.state.token && (
+                  <Route path="/auth" component={AuthPage} />
+                )}
+                <Route path="/events" component={EventsPage} />
+                {this.state.token && (
+                  <Route path="/bookings" component={BookingsPage} />
+                )}
+              </Switch>
+            </main>
+          </AuthContext.Provider>  
         </React.Fragment>
       </BrowserRouter>
       </div>
