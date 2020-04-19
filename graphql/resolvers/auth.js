@@ -2,6 +2,8 @@ const User   = require('../../models/users');
 const bcrypt = require('bcryptjs');
 const jwt    = require('jsonwebtoken');
 
+
+
 module.exports = {
     createUser: async args => {
         try {
@@ -16,9 +18,8 @@ module.exports = {
             });
             const result = await user_1.save();
             return { 
-                ...result._doc, password: null,
-                createdAt: dateToString(result._doc.createdAt),
-                updatedAt: dateToString(result._doc.updatedAt)
+                ...result._doc, 
+                password: null
              };
         }
         catch (err) {

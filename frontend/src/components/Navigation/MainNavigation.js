@@ -12,7 +12,7 @@ const mainNavigation = props => (
     <nav className="main-navigation__navigation">
         <div className="main-navigation__toggle-button">
             <DrawerToggleButton click={props.drawerClickHandler}/>
-        </div>
+        </div> 
 
         <div className="main-navigation__logo"><h1>THE LOGO</h1></div>
         <div className="spacer" />

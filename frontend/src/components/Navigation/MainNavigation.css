@@ -51,6 +51,8 @@
 .main-navigation__items a:active,
 .main-navigation__items a.active {
     color: rgb(30, 209, 209);
+    padding: 0.5rem 0.1rem;
+
 }
 
 
