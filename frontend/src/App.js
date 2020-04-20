@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 
-import AuthPage from './pages/Auth';
-import EventsPage from './pages/Events';
-import BookingsPage from './pages/Bookings';
+import AuthPage from './pages/Auth-Page/Auth';
+import EventsPage from './pages/Events-Page/Events';
+import BookingsPage from './pages/Bookings-Page/Bookings';
 
 import MainNavigation from './components/Navigation/MainNavigation';
 import SideDrawer from './components/Navigation/SideDrawer/SideDrawer';
