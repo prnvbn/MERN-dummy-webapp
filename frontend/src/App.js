@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component }from 'react';
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 
 import AuthPage from './pages/Auth-Page/Auth';
@@ -7,9 +7,10 @@ import BookingsPage from './pages/Bookings-Page/Bookings';
 
 import MainNavigation from './components/Navigation/MainNavigation';
 import SideDrawer from './components/Navigation/SideDrawer/SideDrawer';
-import BackDrop from './components/Navigation/Backdrop/Backdrop';
+import BackDrop from './components/Backdrop/Backdrop';
 
 import AuthContext from './context/auth-context';
+import BackdropContext from './context/backdrop-context';
 
 import './App.css';
 
@@ -17,7 +18,9 @@ class App extends Component {
 
   state = {
     token: null,
-    userId: null
+    userId: null,
+    sideDrawerOpen: false,
+    backdropShowing: false
   }
 
 
@@ -35,9 +38,6 @@ class App extends Component {
     });
   };
 
-  state = {
-    sideDrawerOpen: false
-  };
 
   drawerToggleClickHandler = () => {
     this.setState((prevState) => {
@@ -46,7 +46,10 @@ class App extends Component {
   };
 
   backdropClickHandler = () => {
-    this.setState({sideDrawerOpen: false});
+    this.setState({
+      sideDrawerOpen: false,
+      backdropShowing: false
+    });
   };
 
 
@@ -70,23 +73,30 @@ class App extends Component {
               logout: this.logout
             }}
           >
-            <MainNavigation drawerClickHandler={this.drawerToggleClickHandler} />
-            <SideDrawer show={this.state.sideDrawerOpen} />
-            {backdrop}
-            <main className="main-content" >
-            <Switch>
-                {this.state.token && <Redirect from="/" to="/events" exact />}
-                {this.state.token && <Redirect from="/auth" to="/events" exact />}
-                {!this.state.token && (
-                  <Route path="/auth" component={AuthPage} />
-                )}
-                <Route path="/events" component={EventsPage} />
-                {this.state.token && (
-                  <Route path="/bookings" component={BookingsPage} />
-                )}
-                {!this.state.token && <Redirect to="/auth" exact />}
-              </Switch>
-            </main>
+            <BackdropContext.Provider
+              value ={{
+                showing: this.state.backdropShowing
+              }}  
+            >
+              <MainNavigation drawerClickHandler={this.drawerToggleClickHandler} />
+              <SideDrawer show={this.state.sideDrawerOpen} pageLinkClickHandler = {this.backdropClickHandler}/>
+              {backdrop}
+              <main className="main-content" >
+              <Switch>
+                  {this.state.token && <Redirect from="/" to="/events" exact />}
+                  {this.state.token && <Redirect from="/auth" to="/events" exact />}
+                  {!this.state.token && (
+                    <Route path="/auth" component={AuthPage} />
+                  )}
+                  <Route path="/events" component={EventsPage} />
+                  {this.state.token && (
+                    <Route path="/bookings" component={BookingsPage} />
+                  )}
+                  {!this.state.token && <Redirect to="/auth" exact />}
+                </Switch>
+              </main>
+
+            </BackdropContext.Provider>
           </AuthContext.Provider>  
         </React.Fragment>
       </BrowserRouter>

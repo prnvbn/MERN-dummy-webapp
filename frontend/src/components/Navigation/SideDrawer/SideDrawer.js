@@ -5,6 +5,7 @@ import './SideDrawer.css';
 import AuthContext from '../../../context/auth-context';
 
 const sideDrawer = props => {
+
     let drawerClasses = ['side-drawer'];
     if (props.show) {
         drawerClasses.push('open')
@@ -18,16 +19,16 @@ const sideDrawer = props => {
                         <ul>
                                 {!context.token && (
                                     <li>
-                                        <NavLink to="/auth">Authenticate</NavLink>
+                                        <NavLink to="/auth" onClick ={props.pageLinkClickHandler}>Authenticate</NavLink>
                                     </li>
                                 )}
                                 <li>
-                                    <NavLink to="/events">Events</NavLink>
+                                    <NavLink to="/events" onClick ={props.pageLinkClickHandler}>Events</NavLink>
                                 </li>
                                 {context.token && (
                                     <React.Fragment>
                                         <li>
-                                            <NavLink to="/bookings">Bookings</NavLink>
+                                            <NavLink to="/bookings" onClick ={props.pageLinkClickHandler}>Bookings</NavLink>
                                         </li>
                                         <li>
                                             <button onClick={context.logout}>Logout</button>
