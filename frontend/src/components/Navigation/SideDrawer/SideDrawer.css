@@ -22,20 +22,27 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    
 }
 
 .side-drawer li {
     margin: 0.5rem 0;
 }
-.side-drawer a {
+.side-drawer a,
+.side-drawer button {
     color: #1443df;
     text-decoration: none;
     font-size: 1.2rem;
+    background: transparent;
+    border: none;
 }
 
 .side-drawer a:hover,
 .side-drawer a:active,
-.side-drawer a.active {
+.side-drawer a.active,
+.side-drawer button:hover,
+.side-drawer button:active {
     color: rgb(30, 209, 209);
 }
 

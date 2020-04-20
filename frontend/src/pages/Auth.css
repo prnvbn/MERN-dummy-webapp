@@ -30,11 +30,11 @@
     margin-right: 1rem;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);
     cursor: pointer;
-
 }
 .form-action button:hover,
 .form-action button:active { 
     background: #003afa;
     border: #003afa;
     font-size: larger;
+    size: larger;
 }

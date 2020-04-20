@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import './SideDrawer.css';
+import AuthContext from '../../../context/auth-context';
 
 const sideDrawer = props => {
     let drawerClasses = ['side-drawer'];
@@ -10,21 +11,37 @@ const sideDrawer = props => {
     } 
 
     return (
-        <nav className={drawerClasses.join(' ')}>
-            <ul>
-                <li>
-                    <NavLink to="/auth">Authenticate</NavLink>
-                </li>
+        <AuthContext.Consumer>
+            {(context) => {
+                return (
+                    <nav className={drawerClasses.join(' ')}>
+                        <ul>
+                                {!context.token && (
+                                    <li>
+                                        <NavLink to="/auth">Authenticate</NavLink>
+                                    </li>
+                                )}
+                                <li>
+                                    <NavLink to="/events">Events</NavLink>
+                                </li>
+                                {context.token && (
+                                    <React.Fragment>
+                                        <li>
+                                            <NavLink to="/bookings">Bookings</NavLink>
+                                        </li>
+                                        <li>
+                                            <button onClick={context.logout}>Logout</button>
+                                        </li>
 
-                <li>
-                    <NavLink to="/events">Events</NavLink>
-                </li>
-
-                <li>
-                    <NavLink to="/bookings">Bookings</NavLink>
-                </li>
-            </ul>
-        </nav>
+                                    </React.Fragment>
+                                    
+                                )}
+                            </ul>
+                    </nav>
+                );
+            }}
+        </AuthContext.Consumer>
+        
     );
 };
 
