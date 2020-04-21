@@ -10,7 +10,7 @@ import SideDrawer from './components/Navigation/SideDrawer/SideDrawer';
 import BackDrop from './components/Backdrop/Backdrop';
 
 import AuthContext from './context/auth-context';
-import BackdropContext from './context/backdrop-context';
+
 
 import './App.css';
 
@@ -20,7 +20,6 @@ class App extends Component {
     token: null,
     userId: null,
     sideDrawerOpen: false,
-    backdropShowing: false
   }
 
 
@@ -34,7 +33,8 @@ class App extends Component {
   logout = () =>{
     this.setState({
       token: null,
-      userId: null
+      userId: null,
+      sideDrawerOpen: false
     });
   };
 
@@ -73,15 +73,10 @@ class App extends Component {
               logout: this.logout
             }}
           >
-            <BackdropContext.Provider
-              value ={{
-                showing: this.state.backdropShowing
-              }}  
-            >
-              <MainNavigation drawerClickHandler={this.drawerToggleClickHandler} />
-              <SideDrawer show={this.state.sideDrawerOpen} pageLinkClickHandler = {this.backdropClickHandler}/>
-              {backdrop}
-              <main className="main-content" >
+            <MainNavigation drawerClickHandler={this.drawerToggleClickHandler} />
+            <SideDrawer show={this.state.sideDrawerOpen} pageLinkClickHandler = {this.backdropClickHandler}/>
+            {backdrop}
+            <main className="main-content" >
               <Switch>
                   {this.state.token && <Redirect from="/" to="/events" exact />}
                   {this.state.token && <Redirect from="/auth" to="/events" exact />}
@@ -94,9 +89,7 @@ class App extends Component {
                   )}
                   {!this.state.token && <Redirect to="/auth" exact />}
                 </Switch>
-              </main>
-
-            </BackdropContext.Provider>
+            </main>
           </AuthContext.Provider>  
         </React.Fragment>
       </BrowserRouter>
