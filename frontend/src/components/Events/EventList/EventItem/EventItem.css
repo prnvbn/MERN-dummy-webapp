@@ -3,5 +3,25 @@
     margin: 1rem 0;
     padding: 1rem;
     border: 1px solid #1443df;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.events__list-items h1 {
+    margin: 0;
+    font-size: 1.5rem; 
+    color: #1443df;
+}
+
+
+.events__list-items h2 {
+    margin: 0;
+    font-size: 1rem;
+    color: #7c7c7c;
+}
+
+.events__list-items p {
+    margin: 0;
 }
 

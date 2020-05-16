@@ -14,6 +14,7 @@ class EventsPage extends Component {
     creating: false,
     events: []
   }
+
   static contextType = AuthContext;
 
   constructor(props) {
@@ -186,7 +187,10 @@ class EventsPage extends Component {
           </div>
         )}  
 
-        <EventList events={this.state.events}/>
+        <EventList 
+          events={this.state.events} 
+          authUserId={this.context.userId}
+        />
       </React.Fragment>
     );
   }
